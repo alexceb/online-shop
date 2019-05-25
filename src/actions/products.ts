@@ -1,13 +1,17 @@
-import { action } from 'typesafe-actions';
+import { action, Action } from 'typesafe-actions';
+import { Dispatch } from 'redux';
 
 import { ActionNames } from './constants';
 import { Product } from '../typings/model';
-import { Dispatch } from 'redux';
-import { getInitialData } from './services';
+import { api } from '../utils/api';
+
+export interface ReceivedDataAction extends Action {
+  payload: Product[];
+}
 
 export const onGetData = () => {
-  return async (dispatch: Dispatch) => {
-    const result = await getInitialData();
+  return async (dispatch: Dispatch<ReceivedDataAction>) => {
+    const result = await api.getProducts();
 
     return dispatch({
       type: ActionNames.RECEIVED_DATA,

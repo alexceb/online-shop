@@ -1,6 +1,15 @@
-export function _getProducts(): Promise<Array<any>> {
+import { Product } from "../typings/model";
+
+export function _getProducts(): Promise<Array<Product>> {
   return new Promise((res, rej) =>{
     setTimeout(() => res(products), 1000);
+  });
+}
+
+export function _getProductById(id: number): Promise<Product> {
+  const product = products.filter(product => product.id === id)[0];
+  return new Promise((res, rej) =>{
+    setTimeout(() => res(product), 1000);
   });
 }
 

@@ -1,21 +1,33 @@
 import * as React from 'react';
 import { useEffect } from 'react';
+import { RouteComponentProps } from "react-router";
 
-import { getInitialData } from '../actions/services';
 import { Product } from '../typings/model';
 
-export type ProductListProps = {
+export interface ProductListProps extends RouteComponentProps {
   products: Product[],
   getProducts: () => void;
+  setSelectedProduct: (product: Product) => void;
+  resetSelectedProduct: () => void;
 };
 
 export const ProductList: React.FC<ProductListProps> = props => {
 
-  const { products, getProducts } = props;
+  const { 
+    products,
+    history,
+    getProducts,
+    resetSelectedProduct,
+  } = props;
 
   useEffect(() => {
     getProducts();
-  });
+  }, []);
+
+  const goToProductDetails = (id: number) => {
+    resetSelectedProduct();
+    history.push(`/details/${id}`)
+  };
   
   return (
     <section className="ProductList">
@@ -24,7 +36,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
         products.map((item: Product) => (
           <div key={item.id}>
             <span>Product name: {item.name}</span>
-            <button>Add to cart</button>
+            <button onClick={() => goToProductDetails(item.id)}>Learn more</button>
           </div>
         ))
       }
