@@ -1,0 +1,34 @@
+@import '../../resources/vars.scss';
+
+.nav {
+  background-color: $shop-default-green;
+
+  .navList {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    text-decoration: none;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding-left: 0;
+  }
+  
+  .navListItem {
+    list-style-type: none;
+    padding: 10px;
+    text-decoration: none;
+  
+    &:hover {
+      background-color: $shop-dark-green;
+    }
+  }
+
+  a {
+    text-decoration: none;
+    color: #fff;
+  }
+  
+  .active {
+    font-weight: bold;
+  }
+}

@@ -1,13 +1,12 @@
 import { ActionNames } from '../actions/constants';
-import { initialState } from '.';
-import { ReceivedDataAction } from '../actions/products';
-import { Reducer } from 'redux';
+import { ProductActions } from '../actions/products';
 import { Product } from '../typings/model';
 
-export type ProductActions = ReceivedDataAction;
+type ProductsState = Product[];
 
-export const productsReducer: Reducer<Product[], ProductActions> = 
-  (state = initialState.products, action: ProductActions) => {
+const initialState: ProductsState = [];
+
+export const productsReducer = (state = initialState, action: ProductActions): ProductsState => {
     switch (action.type) {
       case (ActionNames.RECEIVED_DATA):
         return action.payload;

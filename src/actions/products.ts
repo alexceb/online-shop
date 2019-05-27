@@ -1,16 +1,18 @@
-import { action, Action } from 'typesafe-actions';
 import { Dispatch } from 'redux';
 
 import { ActionNames } from './constants';
 import { Product } from '../typings/model';
 import { api } from '../utils/api';
 
-export interface ReceivedDataAction extends Action {
+export interface ReceivedDataAction {
+  type: typeof ActionNames.RECEIVED_DATA,
   payload: Product[];
 }
 
+export type ProductActions = ReceivedDataAction;
+
 export const onGetData = () => {
-  return async (dispatch: Dispatch<ReceivedDataAction>) => {
+  return async (dispatch: Dispatch<ProductActions>) => {
     const result = await api.getProducts();
 
     return dispatch({
@@ -19,4 +21,3 @@ export const onGetData = () => {
     })
   }
 }
-export const onDataReceived = (data: Product[]) => action(ActionNames.RECEIVED_DATA, data);

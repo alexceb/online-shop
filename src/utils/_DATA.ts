@@ -13,7 +13,7 @@ export function _getProductById(id: number): Promise<Product> {
   });
 }
 
-let products = [
+let products: Product[] = [
   {
     "id": 1,
     "name": "Philips hue bulb",
@@ -68,12 +68,12 @@ let products = [
     "weight": 2.1,
     "options": [
       {
-        "color": ["black"],
+        "color": "black",
         "storage": ["250", "500", "1000"],
         "quantity": 10
       },
       {
-        "color": ["white"],
+        "color": "white",
         "storage": ["250", "500"],
         "quantity": 3
       }
@@ -88,17 +88,17 @@ let products = [
     "weight": 1.6,
     "options": [
       {
-        "color": ["black"],
+        "color": "black",
         "storage": ["250", "500"],
         "quantity": 0
       },
       {
-        "color": ["white"],
+        "color": "white",
         "storage": ["250", "500"],
         "quantity": 12
       },
       {
-        "color": ["red"],
+        "color": "red",
         "storage": ["500"],
         "quantity": 5
       }
@@ -113,15 +113,15 @@ let products = [
     "weight": 0.5,
     "options": [
       {
-        "color": ["black"],
+        "color": "black",
         "quantity": 15
       },
       {
-        "color": ["white"],
+        "color": "white",
         "quantity": 0
       },
       {
-        "color": ["red"],
+        "color": "red",
         "quantity": 1
       }
     ]
@@ -135,15 +135,15 @@ let products = [
     "weight": 0.5,
     "options": [
       {
-        "color": ["black"],
+        "color": "black",
         "quantity": 1
       },
       {
-        "color": ["white"],
+        "color": "white",
         "quantity": 11
       },
       {
-        "color": ["orange"],
+        "color": "orange",
         "quantity": 2
       }
     ]
@@ -157,11 +157,11 @@ let products = [
     "weight": 0.4,
     "options": [
       {
-        "color": ["green"],
+        "color": "green",
         "quantity": 0
       },
       {
-        "color": ["white"],
+        "color": "white",
         "quantity": 0
       }
     ]
@@ -175,7 +175,7 @@ let products = [
     "weight": 8.2,
     "options": [
       {
-        "color": ["black"],
+        "color": "black",
         "quantity": 19
       }
     ]
@@ -189,7 +189,7 @@ let products = [
     "weight": 3.9,
     "options": [
       {
-        "color": ["black"],
+        "color": "black",
         "quantity": 3
       }
     ]
@@ -203,11 +203,11 @@ let products = [
     "weight": 0.8,
     "options": [
       {
-        "color": ["black"],
+        "color": "black",
         "quantity": 3
       },
       {
-        "color": ["red"],
+        "color": "red",
         "quantity": 9
       }
     ]

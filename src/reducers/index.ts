@@ -1,25 +1,14 @@
 import { combineReducers } from "redux";
 
-import { Product } from "../typings/model";
-
 import { productsReducer } from "./products";
 import { detailsReducer } from "./details";
-
-export type AppState = {
-  products: Product[],
-  cart: any[],
-  selectedProduct: any,
-};
-
-export const initialState: AppState = {
-  products: [],
-  cart: [],
-  selectedProduct: null,
-};
+import { cartReducer } from "./cart";
 
 const rootReducer = combineReducers({
   products: productsReducer,
-  selectedProduct: detailsReducer,
+  cart: cartReducer,
+  details: detailsReducer,
 });
 
+export type AppState = ReturnType<typeof rootReducer>;
 export default rootReducer;

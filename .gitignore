@@ -1,6 +1,4 @@
 node_modules
-dist/index.html
-dist/src.*.js
-dist/src.*.css
-dist/src.*.map
+dist/
 .cache
+*.scss.d.ts

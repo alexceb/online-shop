@@ -1,16 +1,28 @@
 import { ActionNames } from '../actions/constants';
-import { initialState } from '.';
-import { ProductSelectedAction } from '../actions/details';
+import { DetailsActions } from '../actions/details';
 
-export type DetailsActions = 
-  ProductSelectedAction;
+interface DetailsState {
+  selectedProduct: any,
+  isLoading: boolean;
+}
 
-export const detailsReducer = (state = initialState.selectedProduct, action: DetailsActions) => {
+const initialState: DetailsState = {
+  selectedProduct: null,
+  isLoading: true,
+}
+
+export const detailsReducer = (state = initialState, action: DetailsActions): DetailsState => {
   switch (action.type) {
     case (ActionNames.GET_PRODUCT_BY_ID):
-      return action.payload;
+      return {
+        selectedProduct: action.payload.product,
+        isLoading: action.payload.isLoading,
+      };
     case (ActionNames.RESET_SELECTED_PRODUCT):
-      return null;
+      return {
+        selectedProduct: null,
+        isLoading: action.payload.isLoading,
+      };
     default:
       return state;
   }

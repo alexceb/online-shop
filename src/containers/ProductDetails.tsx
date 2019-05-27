@@ -3,13 +3,14 @@ import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { withRouter } from 'react-router-dom';
 
-import { ProductDetails, ProductDetailsProps } from '../components/ProductDetails';
+import { ProductDetails, ProductDetailsProps } from '../components/ProductDetails/ProductDetails';
 import { AppState } from '../reducers';
 
-import { onGetProductById } from '../actions/details';
+import { onGetProductById, resetSelectedProduct } from '../actions/details';
 
 const mapStateToProps = (state: AppState, ownProps: ProductDetailsProps) => ({
-  product: state.selectedProduct,
+  product: state.details.selectedProduct,
+  isLoading: state.details.isLoading,
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) => {
