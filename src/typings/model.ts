@@ -15,10 +15,14 @@ export interface Product {
   options: ProductOption[]
 }
 
+export interface SubOption {
+  optionType: string | undefined
+  optionValue: string | number | undefined
+}
+
 export interface ProductConfiguration {
   color: string
-  power?: number
-  storage?: string
+  subOption: SubOption
 }
 
 export interface CartItem extends ProductConfiguration{

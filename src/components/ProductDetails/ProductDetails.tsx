@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { RouteComponentProps } from "react-router";
+import { v4 } from 'node-uuid';
 
-import { Product, ProductOption } from '../../typings/model';
+import { Product, ProductOption, SubOption } from '../../typings/model';
 import { useEffect, useState } from 'react';
 import * as styles from './ProductDetails.scss';
 
@@ -25,6 +26,10 @@ export const ProductDetails: React.FC<ProductDetailsProps> = props => {
   } = props;
 
   const [productOptions, setProductOptions] = useState<Array<string | number> | undefined>([]);
+  const [color, setColor] = useState<string>();
+  const [optionLabel, setOptionLabel] = useState<string>();
+  const [option, setOption] = useState<SubOption>({ optionType: null, optionValue: null });
+
 
   useEffect(() => {
     const productId = Number(match.params.id);
@@ -32,33 +37,69 @@ export const ProductDetails: React.FC<ProductDetailsProps> = props => {
   }, [match]);
 
   useEffect(()=> {
-    product && setSubOptions(product.options[0]);
-  }, [product]);
+    if (product) {
+      setSubOptions(product.options[0]);
+    }
+  }, [product]);;
 
   const OptionSelector = (props: any) => {
-    const { options } = props;
+    const { options, label, inputName, onSelect, compareWith } = props;
     return (
       <div className={styles.optionsContainer}>
-        {options.map((option: string | number) => (
-          <a href="" className={styles.selectableOption}>
-            <span className={styles.textLabel}>{option}</span>
-          </a>
-        ))}
+        <span className={styles.optionSelectorLabel}>{label}</span>
+        {options.map((option: any) => {
+          const insertedOption = option.color ? option.color : option;
+          return(
+            <React.Fragment key={v4()}>
+              <input type="radio" id={insertedOption} value={insertedOption} name={inputName}
+                    onChange={() => onSelect(option)}
+                    checked={compareWith === insertedOption} />
+              <label htmlFor={insertedOption} className={styles.selectableOption}>
+                {option.color ? (
+                  <span className={styles.colorLabel} style={{backgroundColor: insertedOption}}></span>
+                ) : null}
+                <span className={styles.textLabel}>{insertedOption}</span>
+              </label>
+            </React.Fragment>
+          )
+        })}
       </div>
     )
   }
 
-  const setSubOptions = (option: ProductOption) => {
-    if (option.hasOwnProperty('power')) {
-      setProductOptions(option.power);
-    } else if (option.hasOwnProperty('storage')) {
-      setProductOptions(option.storage);
+  const onSelectSubOption = (value: string | number) => {
+    setOption({
+      ...option,
+      optionValue: value,
+    });
+  }
+
+  const setSubOptions = (selectedOption: ProductOption) => {
+    setColor(selectedOption.color);
+    if (selectedOption.hasOwnProperty('power')) {
+      setProductOptions(selectedOption.power);
+      setOption({
+        optionType: 'power', 
+        optionValue: selectedOption.power[0],
+      });
+      setOptionLabel('Power options');
+    } else if (selectedOption.hasOwnProperty('storage')) {
+      setOptionLabel('Storage options');
+      setProductOptions(selectedOption.storage);
+      setOption({
+        optionType: 'storage', 
+        optionValue: selectedOption.storage[0],
+      });
     }
   }
 
-  const handleColorSelect = (option: ProductOption, event: any): void => {
-    event.preventDefault();
-    setSubOptions(option);
+  const addToCart = (): void => {
+    console.log({
+      product,
+      color,
+      subOption: option,
+      quantity: 1,
+    })
   }
 
   return (
@@ -74,22 +115,21 @@ export const ProductDetails: React.FC<ProductDetailsProps> = props => {
             : 
             (<span>OUT OF STOCK</span>)}
           </p>
-          <div className={styles.optionsContainer}>
-            {product.options.map(option => (
-              <>
-                <a href="" onClick={(event) => handleColorSelect(option, event)} className={styles.selectableOption}>
-                  <span className={styles.colorLabel} style={{backgroundColor: option.color}}></span>
-                  <span className={styles.textLabel}>{option.color}</span>
-                </a>              
-              </>
-            ))}
-          </div>
-          <OptionSelector options={productOptions} />
+          <OptionSelector options={product.options} 
+                          label="Colors"
+                          inputName="selectColor"
+                          onSelect={setSubOptions}
+                          compareWith={color} />
+          <OptionSelector options={productOptions} 
+                          label={optionLabel}
+                          inputName="selectSubOption"
+                          onSelect={onSelectSubOption}
+                          compareWith={option.optionValue} />
+          <button onClick={() => addToCart()} className={styles.addToCart}>Add to cart</button>
         </>
       ) : (
         <div>Loading ...</div>
       )}
     </section>
   )
-
 }

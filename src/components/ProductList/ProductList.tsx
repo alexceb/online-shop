@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 import { RouteComponentProps } from "react-router";
+import { v4 } from 'node-uuid';
 
 import { Product } from '../../typings/model';
 import { ProductItem } from '../ProductItem/ProductItem';
@@ -29,7 +30,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
     <section className={styles.productList}>
       { products && products.length ? 
         products.map((item: Product) => (
-          <ProductItem product={item}/>
+          <ProductItem product={item} key={v4()}/>
         ))
         :
         (
