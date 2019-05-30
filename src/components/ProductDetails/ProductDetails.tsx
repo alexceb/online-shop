@@ -1,10 +1,12 @@
 import * as React from 'react';
 import { RouteComponentProps } from "react-router";
-import { v4 } from 'node-uuid';
+
 
 import { Product, ProductOption, SubOption } from '../../typings/model';
 import { useEffect, useState } from 'react';
+
 import * as styles from './ProductDetails.scss';
+import { OptionSelector } from './OptionSelector';
 
 interface ProductDetailsMatchParams {
   id: string;
@@ -42,30 +44,7 @@ export const ProductDetails: React.FC<ProductDetailsProps> = props => {
     }
   }, [product]);;
 
-  const OptionSelector = (props: any) => {
-    const { options, label, inputName, onSelect, compareWith } = props;
-    return (
-      <div className={styles.optionsContainer}>
-        <span className={styles.optionSelectorLabel}>{label}</span>
-        {options.map((option: any) => {
-          const insertedOption = option.color ? option.color : option;
-          return(
-            <React.Fragment key={v4()}>
-              <input type="radio" id={insertedOption} value={insertedOption} name={inputName}
-                    onChange={() => onSelect(option)}
-                    checked={compareWith === insertedOption} />
-              <label htmlFor={insertedOption} className={styles.selectableOption}>
-                {option.color ? (
-                  <span className={styles.colorLabel} style={{backgroundColor: insertedOption}}></span>
-                ) : null}
-                <span className={styles.textLabel}>{insertedOption}</span>
-              </label>
-            </React.Fragment>
-          )
-        })}
-      </div>
-    )
-  }
+  
 
   const onSelectSubOption = (value: string | number) => {
     setOption({
@@ -76,6 +55,7 @@ export const ProductDetails: React.FC<ProductDetailsProps> = props => {
 
   const setSubOptions = (selectedOption: ProductOption) => {
     setColor(selectedOption.color);
+    setProductOptions(null);
     if (selectedOption.hasOwnProperty('power')) {
       setProductOptions(selectedOption.power);
       setOption({
