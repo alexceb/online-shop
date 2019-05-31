@@ -7,6 +7,8 @@ import { ProductDetails, ProductDetailsProps } from '../components/ProductDetail
 import { AppState } from '../reducers';
 
 import { onGetProductById, resetSelectedProduct } from '../actions/details';
+import { addItemToCart } from '../actions/cart';
+import { CartItem } from '../typings/model';
 
 const mapStateToProps = (state: AppState, ownProps: ProductDetailsProps) => ({
   product: state.details.selectedProduct,
@@ -16,6 +18,8 @@ const mapStateToProps = (state: AppState, ownProps: ProductDetailsProps) => ({
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) => {
   return {
     getProductById: (id: number) => dispatch(onGetProductById(id)),
+    resetProduct: () => dispatch(resetSelectedProduct()),
+    addItemToCart: (item: CartItem) => dispatch(addItemToCart(item)),
   };
 };
 

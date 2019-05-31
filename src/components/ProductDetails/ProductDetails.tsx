@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { RouteComponentProps } from "react-router";
 
-
-import { Product, ProductOption, SubOption } from '../../typings/model';
+import { Product, ProductOption, SubOption, CartItem } from '../../typings/model';
 import { useEffect, useState } from 'react';
 
 import * as styles from './ProductDetails.scss';
 import { OptionSelector } from './OptionSelector';
+import { Loader } from '../Loader/Loader';
+import { Dialog } from '../Dialog/Dialog';
 
 interface ProductDetailsMatchParams {
   id: string;
@@ -16,35 +17,42 @@ export interface ProductDetailsProps extends RouteComponentProps< ProductDetails
   product: Product,
   isLoading: boolean,
   getProductById: (id: number) => void,
+  resetProduct: () => void,
+  addItemToCart: (item: CartItem) => void,
 };
 
 export const ProductDetails: React.FC<ProductDetailsProps> = props => {
 
   const { 
     match,
+    history,
     product,
     isLoading,
-    getProductById
+    getProductById,
+    resetProduct,
+    addItemToCart,
   } = props;
 
   const [productOptions, setProductOptions] = useState<Array<string | number> | undefined>([]);
   const [color, setColor] = useState<string>();
   const [optionLabel, setOptionLabel] = useState<string>();
   const [option, setOption] = useState<SubOption>({ optionType: null, optionValue: null });
+  const [added, setAdded] = useState<boolean>(false);
 
 
   useEffect(() => {
     const productId = Number(match.params.id);
     getProductById(productId);
+    return () => {
+      resetProduct();
+    }
   }, [match]);
 
   useEffect(()=> {
     if (product) {
       setSubOptions(product.options[0]);
     }
-  }, [product]);;
-
-  
+  }, [product]);
 
   const onSelectSubOption = (value: string | number) => {
     setOption({
@@ -74,16 +82,26 @@ export const ProductDetails: React.FC<ProductDetailsProps> = props => {
   }
 
   const addToCart = (): void => {
-    console.log({
+    const cartItem: CartItem = {
       product,
       color,
       subOption: option,
       quantity: 1,
-    })
+    };
+    addItemToCart(cartItem);
+    // setAdded(true);
+    setTimeout(() => {
+      goToCart();
+    }, 1000);
+  }
+
+  const goToCart = (): void => {
+    history.push('/checkout');
   }
 
   return (
     <section className={styles.productDetails}>
+      <Dialog />
       {!isLoading ? (
         <>
           <h3>{product.name}</h3>
@@ -105,10 +123,19 @@ export const ProductDetails: React.FC<ProductDetailsProps> = props => {
                           inputName="selectSubOption"
                           onSelect={onSelectSubOption}
                           compareWith={option.optionValue} />
-          <button onClick={() => addToCart()} className={styles.addToCart}>Add to cart</button>
+          
+          {added ? (
+            <div className={styles.buttonContainer}>
+              <button onClick={() => goToCart()} className={styles.button}>Go to cart</button>
+            </div>
+          ) : (
+            <div className={styles.buttonContainer}>
+              <button onClick={() => addToCart()} className={styles.button}>Add to cart</button>
+            </div>
+          )}
         </>
       ) : (
-        <div>Loading ...</div>
+        <Loader />
       )}
     </section>
   )

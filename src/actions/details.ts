@@ -3,6 +3,7 @@ import { ActionNames } from './constants';
 import { Product } from '../typings/model';
 import { Dispatch } from 'redux';
 import { api } from '../utils/api';
+import { enableLoader } from './loader';
 
 interface ProductResetAction {
   type: typeof ActionNames.RESET_SELECTED_PRODUCT
@@ -23,7 +24,6 @@ export type DetailsActions = GetProductByIdAction | ProductResetAction;
 
 export const onGetProductById = (id: number) => {
   return (dispatch: Dispatch<DetailsActions>) => {
-    dispatch(resetSelectedProduct());
     api.getProductById(id)
       .then(res => {
         dispatch({

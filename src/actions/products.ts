@@ -6,7 +6,10 @@ import { api } from '../utils/api';
 
 export interface ReceivedDataAction {
   type: typeof ActionNames.RECEIVED_DATA,
-  payload: Product[];
+  payload: {
+    data: Product[],
+    isLoading: boolean,
+  };
 }
 
 export type ProductActions = ReceivedDataAction;
@@ -17,7 +20,10 @@ export const onGetData = () => {
 
     return dispatch({
       type: ActionNames.RECEIVED_DATA,
-      payload: result,
+      payload: {
+        data: result,
+        isLoading: false,
+      },
     })
   }
 }

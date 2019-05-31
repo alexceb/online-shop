@@ -9,7 +9,8 @@ import { AppState } from '../reducers';
 import { onGetData } from '../actions/products';
 
 const mapStateToProps = (state: AppState, ownProps: ProductListProps) => ({
-  products: state.products,
+  products: state.products.data,
+  isLoading: state.products.isLoading,
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) => {
