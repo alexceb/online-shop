@@ -1,0 +1,80 @@
+@import '../../resources/vars.scss';
+
+.checkoutContainer {
+	margin-top: 2rem;
+
+	.emptyMessage {
+		text-align: center;
+		margin: 0 auto;
+		padding: 3rem 0;
+		font-size: 1.3rem;
+	}
+
+	.totalAmount {
+		margin-left: auto;
+		width: 10%;
+    min-width: 8rem;
+    text-align: right;
+    padding: 1.5rem 1rem;
+	}
+
+	.nameLabel {
+		font-weight: bold;
+		font-size: 1rem;
+		line-height: 3rem;
+		margin-left: 1rem;
+		width: 40%;
+	}
+
+	.label {
+		font-weight: bold;
+		line-height: 3rem;
+		margin: 0 0.4rem 0 1.5rem;
+	}
+
+	.checkoutList {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+
+		.checkoutItemContainer {
+			padding: 1rem 0;
+			margin-top: 0.3rem;
+			border: 1px solid $shop-gray;
+
+			.checkoutItemWrapper {
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				height: 3rem;
+			}
+
+			.quantity {
+				display: inline-block;
+				margin-left: auto;
+
+				& > button {
+					display: inline-block;
+					margin: 0 1rem;
+					width: 2rem;
+					height: 2rem;
+					font-size: 1.3rem;
+					border-radius: 0.3rem;
+					cursor: pointer;
+					border: none;
+					color: #fff;
+					box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+				}
+
+				.quantityButton {
+					background-color: $shop-default-green;
+				}
+
+				.removeButton {
+					background-color: $shop-gray;
+					margin-left: 2rem;
+				}
+			}
+		}
+	}
+}

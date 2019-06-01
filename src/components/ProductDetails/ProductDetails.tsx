@@ -10,15 +10,18 @@ import { Loader } from '../Loader/Loader';
 import { Dialog } from '../Dialog/Dialog';
 
 interface ProductDetailsMatchParams {
-  id: string;
+  id: string
 }
 
 export interface ProductDetailsProps extends RouteComponentProps< ProductDetailsMatchParams > {
-  product: Product,
-  isLoading: boolean,
-  getProductById: (id: number) => void,
-  resetProduct: () => void,
-  addItemToCart: (item: CartItem) => void,
+  products: Product[]
+  selectedProduct: Product
+  isLoading: boolean
+  getProductById: (products: Product[], id: number) => void
+  getProductByIdFromApi: (products: Product[], id: number) => void
+  resetProduct: () => void
+  addItemToCart: (item: CartItem) => void
+  decreaseAmountInStock: (item: CartItem, amount: number) => void
 };
 
 export const ProductDetails: React.FC<ProductDetailsProps> = props => {
@@ -26,33 +29,43 @@ export const ProductDetails: React.FC<ProductDetailsProps> = props => {
   const { 
     match,
     history,
-    product,
+    products,
+    selectedProduct,
     isLoading,
     getProductById,
+    getProductByIdFromApi,
     resetProduct,
     addItemToCart,
+    decreaseAmountInStock,
   } = props;
 
+  const [product, setProduct] = useState<Product>();
   const [productOptions, setProductOptions] = useState<Array<string | number> | undefined>([]);
   const [color, setColor] = useState<string>();
   const [optionLabel, setOptionLabel] = useState<string>();
   const [option, setOption] = useState<SubOption>({ optionType: null, optionValue: null });
-  const [added, setAdded] = useState<boolean>(false);
+  const [showDialog, setShowDialog] = useState<boolean>(false);
 
 
   useEffect(() => {
     const productId = Number(match.params.id);
-    getProductById(productId);
+    getProductByIdFromApi(products, productId);
     return () => {
       resetProduct();
     }
-  }, [match]);
+  }, []);
 
   useEffect(()=> {
-    if (product) {
-      setSubOptions(product.options[0]);
+    if (selectedProduct && selectedProduct.available) {
+      const filteredOptions = selectedProduct.options
+        .filter((option: ProductOption) => option.quantity > 0);
+      setProduct({
+        ...selectedProduct,
+        options: filteredOptions,
+      });
+      setSubOptions(filteredOptions[0]);
     }
-  }, [product]);
+  }, [products, selectedProduct]);
 
   const onSelectSubOption = (value: string | number) => {
     setOption({
@@ -88,21 +101,26 @@ export const ProductDetails: React.FC<ProductDetailsProps> = props => {
       subOption: option,
       quantity: 1,
     };
+    decreaseAmountInStock(cartItem, 1);
     addItemToCart(cartItem);
-    // setAdded(true);
-    setTimeout(() => {
-      goToCart();
-    }, 1000);
+    setShowDialog(true);
   }
 
   const goToCart = (): void => {
     history.push('/checkout');
   }
 
+  const goShopping = (): void => {
+    history.push('/');
+  }
+
   return (
     <section className={styles.productDetails}>
-      <Dialog />
-      {!isLoading ? (
+      <Dialog visible={showDialog}
+              onGoShopping={goShopping} 
+              onGoCart={goToCart} 
+              onCancel={setShowDialog}/>
+      {product && !isLoading ? (
         <>
           <h3>{product.name}</h3>
           <p>Brand: {product.brand}</p>
@@ -113,26 +131,23 @@ export const ProductDetails: React.FC<ProductDetailsProps> = props => {
             : 
             (<span>OUT OF STOCK</span>)}
           </p>
-          <OptionSelector options={product.options} 
+          {product.available ? (
+            <>
+              <OptionSelector options={product.options} 
                           label="Colors"
                           inputName="selectColor"
                           onSelect={setSubOptions}
                           compareWith={color} />
-          <OptionSelector options={productOptions} 
-                          label={optionLabel}
-                          inputName="selectSubOption"
-                          onSelect={onSelectSubOption}
-                          compareWith={option.optionValue} />
-          
-          {added ? (
-            <div className={styles.buttonContainer}>
-              <button onClick={() => goToCart()} className={styles.button}>Go to cart</button>
-            </div>
-          ) : (
-            <div className={styles.buttonContainer}>
-              <button onClick={() => addToCart()} className={styles.button}>Add to cart</button>
-            </div>
-          )}
+              <OptionSelector options={productOptions} 
+                              label={optionLabel}
+                              inputName="selectSubOption"
+                              onSelect={onSelectSubOption}
+                              compareWith={option.optionValue} />
+              <div className={styles.buttonContainer}>
+                <button onClick={() => addToCart()} className={styles.button}>Add to cart</button>
+              </div>
+            </>
+          ) : null}
         </>
       ) : (
         <Loader />

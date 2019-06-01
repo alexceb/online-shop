@@ -6,20 +6,24 @@ import { withRouter } from 'react-router-dom';
 import { ProductDetails, ProductDetailsProps } from '../components/ProductDetails/ProductDetails';
 import { AppState } from '../reducers';
 
-import { onGetProductById, resetSelectedProduct } from '../actions/details';
+import { onGetProductById, resetSelectedProduct, onGetProductByIdFromApi } from '../actions/details';
 import { addItemToCart } from '../actions/cart';
-import { CartItem } from '../typings/model';
+import { CartItem, Product } from '../typings/model';
+import { decreaseAmountInStock } from '../actions/products';
 
 const mapStateToProps = (state: AppState, ownProps: ProductDetailsProps) => ({
-  product: state.details.selectedProduct,
+  products: state.products.data,
+  selectedProduct: state.details.selectedProduct,
   isLoading: state.details.isLoading,
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) => {
   return {
-    getProductById: (id: number) => dispatch(onGetProductById(id)),
+    getProductById: (products: Product[], id: number) => dispatch(onGetProductById(products,id)),
+    getProductByIdFromApi: (products: Product[], id: number) => dispatch(onGetProductByIdFromApi(products, id)),
     resetProduct: () => dispatch(resetSelectedProduct()),
     addItemToCart: (item: CartItem) => dispatch(addItemToCart(item)),
+    decreaseAmountInStock: (item: CartItem, amount: number) => dispatch(decreaseAmountInStock(item, amount)),
   };
 };
 

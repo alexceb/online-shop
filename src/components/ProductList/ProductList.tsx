@@ -22,12 +22,6 @@ export const ProductList: React.FC<ProductListProps> = props => {
     isLoading,
     getProducts,
   } = props;
-
-  useEffect(() => {
-    if (products && products.length == 0) {
-      getProducts();
-    }
-  }, []);
   
   return (
     <section className={styles.productList}>

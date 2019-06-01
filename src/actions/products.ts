@@ -1,18 +1,26 @@
 import { Dispatch } from 'redux';
 
 import { ActionNames } from './constants';
-import { Product } from '../typings/model';
+import { Product, CartItem } from '../typings/model';
 import { api } from '../utils/api';
 
-export interface ReceivedDataAction {
-  type: typeof ActionNames.RECEIVED_DATA,
+interface ReceivedDataAction {
+  type: typeof ActionNames.RECEIVED_DATA
   payload: {
-    data: Product[],
-    isLoading: boolean,
+    data: Product[]
+    isLoading: boolean
   };
 }
 
-export type ProductActions = ReceivedDataAction;
+interface ChangeAmountAction {
+  type: typeof ActionNames.INCREASE_AMOUNT_IN_STOCK | ActionNames.DECREASE_AMOUNT_IN_STOCK
+  payload: {
+    item: CartItem
+    amount: number
+  }
+}
+
+export type ProductActions = ReceivedDataAction | ChangeAmountAction;
 
 export const onGetData = () => {
   return async (dispatch: Dispatch<ProductActions>) => {
@@ -27,3 +35,19 @@ export const onGetData = () => {
     })
   }
 }
+
+export const increaseAmountInStock = (item: CartItem, amount: number): ChangeAmountAction => ({
+  type: ActionNames.INCREASE_AMOUNT_IN_STOCK,
+  payload: {
+    item,
+    amount,
+  },
+});
+
+export const decreaseAmountInStock = (item: CartItem, amount: number): ChangeAmountAction => ({
+  type: ActionNames.DECREASE_AMOUNT_IN_STOCK,
+  payload: {
+    item,
+    amount,
+  },
+});

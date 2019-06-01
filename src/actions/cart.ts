@@ -7,7 +7,7 @@ interface RemoveItemAction {
 }
 
 interface UpdateItemQuantityAction {
-  type: typeof ActionNames.UPDATE_ITEM_QUANTITY
+  type: typeof ActionNames.INCREASE_AMOUNT | ActionNames.DESCRESE_AMOUNT,
   payload: CartItem
 }
 
@@ -26,8 +26,13 @@ export const removeItemFromCart = (item: CartItem): RemoveItemAction => ({
   payload: item,
 });
 
-export const updateItemQuantity = (item: CartItem): UpdateItemQuantityAction => ({
-  type: ActionNames.UPDATE_ITEM_QUANTITY,
+export const decreaseAmount = (item: CartItem): UpdateItemQuantityAction => ({
+  type: ActionNames.DESCRESE_AMOUNT,
+  payload: item,
+});
+
+export const increaseAmount = (item: CartItem): UpdateItemQuantityAction => ({
+  type: ActionNames.INCREASE_AMOUNT,
   payload: item,
 });
 

@@ -109,7 +109,7 @@ let products: Product[] = [
     "name": "Bluetooth speaker",
     "brand": "JBL",
     "price": "800",
-    "available": false,
+    "available": true,
     "weight": 0.5,
     "options": [
       {
@@ -185,7 +185,7 @@ let products: Product[] = [
     "name": "BenQ GW2765HE Eye-Care",
     "brand": "BenQ",
     "price": "2700",
-    "available": false,
+    "available": true,
     "weight": 3.9,
     "options": [
       {

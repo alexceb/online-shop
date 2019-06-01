@@ -12,10 +12,14 @@ export const ProductItem: React.FC<ProductItemProps> = props => {
   const { product } = props;
 
   return (
-    <NavLink to={`details/${product.id}`} className={styles.productItem}>
-      <div className={styles.productItemWrapper}>
-        <div>{product.name}</div>
-      </div>
-    </NavLink>
+    <>
+      {product.available ? (
+        <NavLink to={`details/${product.id}`} className={styles.productItem}>
+          <div className={styles.productItemWrapper}>
+            <div>{product.name}</div>
+          </div>
+        </NavLink>
+      ) : null}
+    </>
   )
 };
