@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import { ProductDetails, ProductDetailsProps } from '../components/ProductDetails/ProductDetails';
 import { AppState } from '../reducers';
 
-import { onGetProductById, resetSelectedProduct, onGetProductByIdFromApi } from '../actions/details';
+import { resetSelectedProduct, onGetProductByIdFromApi } from '../actions/details';
 import { addItemToCart } from '../actions/cart';
 import { CartItem, Product } from '../typings/model';
 import { decreaseAmountInStock } from '../actions/products';
@@ -19,7 +19,6 @@ const mapStateToProps = (state: AppState, ownProps: ProductDetailsProps) => ({
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<any, any, AnyAction>) => {
   return {
-    getProductById: (products: Product[], id: number) => dispatch(onGetProductById(products,id)),
     getProductByIdFromApi: (products: Product[], id: number) => dispatch(onGetProductByIdFromApi(products, id)),
     resetProduct: () => dispatch(resetSelectedProduct()),
     addItemToCart: (item: CartItem) => dispatch(addItemToCart(item)),

@@ -9,11 +9,16 @@ export function _getProducts(): Promise<Array<Product>> {
 export function _getProductById(id: number): Promise<Product> {
   const product = products.filter(product => product.id === id)[0];
   return new Promise((res, rej) =>{
-    setTimeout(() => res(product), 1000);
+    if (product) {
+      setTimeout(() => res(product), 1000);
+    } else {
+      const error = `The product with ID:${id} was not found`;
+      setTimeout(() => rej(error), 1000);
+    }
   });
 }
 
-let products: Product[] = [
+export const products: Product[] = [
   {
     "id": 1,
     "name": "Philips hue bulb",

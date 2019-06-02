@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import * as styles from './Nav.scss';
+import { CartItem } from '../../typings/model';
 
 export interface NavigationProps {
-  cart: any[],
+  cart: CartItem[],
 };
 
 export const Nav: React.FC<NavigationProps> = props => {

@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dialog notification component render() Renders <Dialog /> correctly 1`] = `
+<Fragment>
+  <div
+    className="dialogContainer"
+  >
+    <div
+      className="dialogContent"
+    >
+      <div
+        className="dialogMessage"
+      >
+        You successfully added product to cart
+      </div>
+      <div
+        className="bottom"
+      >
+        <button
+          className="continueShopping"
+          onClick={[Function]}
+        >
+          Continue shopping
+        </button>
+        <button
+          className="cartButton"
+          onClick={[Function]}
+        >
+          Go to cart
+        </button>
+      </div>
+    </div>
+  </div>
+</Fragment>
+`;

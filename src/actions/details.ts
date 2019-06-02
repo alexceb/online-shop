@@ -1,9 +1,7 @@
-import { action, Action } from 'typesafe-actions';
 import { ActionNames } from './constants';
 import { Product } from '../typings/model';
 import { Dispatch } from 'redux';
 import { api } from '../utils/api';
-import { enableLoader } from './loader';
 
 interface ProductResetAction {
   type: typeof ActionNames.RESET_SELECTED_PRODUCT
@@ -13,7 +11,7 @@ interface ProductResetAction {
 }
 
 interface GetProductByIdFromApiAction {
-  type: typeof ActionNames.GET_PRODUCT_BY_ID_FROM_API
+  type: typeof ActionNames.GET_PRODUCT_BY_ID_SUCCESS
   payload: {
     products: Product[],
     product: Product,
@@ -21,43 +19,40 @@ interface GetProductByIdFromApiAction {
   }
 }
 
-interface GetProductByIdAction {
-  type: typeof ActionNames.GET_PRODUCT_BY_ID
+interface GetProductByIdErrorAction {
+  type: typeof ActionNames.GET_PRODUCT_BY_ID_ERROR
   payload: {
-    products: Product[],
-    id: number,
+    error: Error,
+    isLoading: boolean,
   }
 }
 
-export type DetailsActions = GetProductByIdAction |
-                             ProductResetAction |
-                             GetProductByIdFromApiAction;
+export type DetailsActions = ProductResetAction |
+                             GetProductByIdFromApiAction |
+                             GetProductByIdErrorAction;
 
 export const onGetProductByIdFromApi = (products: Product[], id: number) => {
   return (dispatch: Dispatch<DetailsActions>) => {
-    api.getProductById(id)
-      .then(res => {
-        dispatch({
-          type: ActionNames.GET_PRODUCT_BY_ID_FROM_API,
-          payload: {
-            products: products.filter(product => product.id === id),
-            product: res,
-            isLoading: false,
-          },
-        });
-        return res;
-      })
-      .catch(error => {
-
-      });
+    return api.getProductById(id)
+      .then(res => dispatch(onGetProductSuccess(products, res, id)))
+      .catch(err => dispatch(onGetProductError(err)));
   }
 }
 
-export const onGetProductById = (products: Product[], id: number) => ({
-  type: ActionNames.GET_PRODUCT_BY_ID_FROM_API,
+export const onGetProductSuccess = (products: Product[], res: Product, id: number): GetProductByIdFromApiAction => ({
+  type: ActionNames.GET_PRODUCT_BY_ID_SUCCESS,
   payload: {
-    products,
-    id,
+    products: products.filter(product => product.id === id),
+    product: res,
+    isLoading: false,
+  },
+});
+
+export const onGetProductError = (error: Error): GetProductByIdErrorAction => ({
+  type: ActionNames.GET_PRODUCT_BY_ID_ERROR,
+  payload: {
+    error,
+    isLoading: false,
   }
 })
 

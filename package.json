@@ -5,22 +5,37 @@
   "main": "index.js",
   "scripts": {
     "start": "parcel public/index.html -p 3000",
-    "build": "parcel build public/index.html"
+    "build": "parcel build public/index.html",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.4.5",
     "parcel-bundler": "^1.12.3",
     "typescript": "^3.4.5"
   },
   "dependencies": {
+    "@types/enzyme": "^3.9.3",
+    "@types/enzyme-adapter-react-16": "^1.0.5",
+    "@types/fetch-mock": "^7.3.0",
+    "@types/jest": "^24.0.13",
     "@types/node-uuid": "0.0.28",
     "@types/react": "^16.8.18",
     "@types/react-dom": "^16.8.4",
     "@types/react-redux": "^7.0.9",
     "@types/react-router-dom": "^4.3.3",
+    "@types/redux-mock-store": "^1.0.1",
     "autoprefixer": "^9.5.1",
+    "babel-jest": "^24.8.0",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.13.2",
+    "enzyme-to-json": "^3.3.5",
+    "fetch-mock": "^7.3.3",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^24.8.0",
     "node-sass": "^4.12.0",
     "node-uuid": "^1.4.8",
     "parcel-plugin-typed-css-modules": "^1.1.0",
@@ -30,7 +45,9 @@
     "react-redux": "^7.0.3",
     "react-router-dom": "^5.0.0",
     "redux": "^4.0.1",
+    "redux-mock-store": "^1.5.3",
     "redux-thunk": "^2.3.0",
+    "ts-jest": "^24.0.2",
     "typesafe-actions": "^4.4.0"
   }
 }

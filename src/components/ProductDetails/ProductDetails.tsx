@@ -17,7 +17,6 @@ export interface ProductDetailsProps extends RouteComponentProps< ProductDetails
   products: Product[]
   selectedProduct: Product
   isLoading: boolean
-  getProductById: (products: Product[], id: number) => void
   getProductByIdFromApi: (products: Product[], id: number) => void
   resetProduct: () => void
   addItemToCart: (item: CartItem) => void
@@ -32,7 +31,6 @@ export const ProductDetails: React.FC<ProductDetailsProps> = props => {
     products,
     selectedProduct,
     isLoading,
-    getProductById,
     getProductByIdFromApi,
     resetProduct,
     addItemToCart,
@@ -118,8 +116,7 @@ export const ProductDetails: React.FC<ProductDetailsProps> = props => {
     <section className={styles.productDetails}>
       <Dialog visible={showDialog}
               onGoShopping={goShopping} 
-              onGoCart={goToCart} 
-              onCancel={setShowDialog}/>
+              onGoCart={goToCart} />
       {product && !isLoading ? (
         <>
           <h3>{product.name}</h3>

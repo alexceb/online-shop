@@ -2,7 +2,7 @@ import { ActionNames } from '../actions/constants';
 import { ProductActions } from '../actions/products';
 import { Product, CartItem, ProductOption } from '../typings/model';
 
-interface ProductsState {
+export interface ProductsState {
   data: Product[]
   isLoading: boolean
 }
@@ -62,6 +62,11 @@ export const productsReducer = (state = initialState, action: ProductActions): P
       return {
         ...state,
         data: action.payload.data,
+        isLoading: action.payload.isLoading,
+      }
+    case (ActionNames.RECEIVED_DATA_ERROR):
+      return {
+        ...state,
         isLoading: action.payload.isLoading,
       }
     case (ActionNames.INCREASE_AMOUNT_IN_STOCK):

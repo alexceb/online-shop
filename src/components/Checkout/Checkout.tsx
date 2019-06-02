@@ -10,11 +10,11 @@ export interface CheckoutProps extends RouteComponentProps {
   cart: CartItem[],
   total: number,
   products: Product[],
-  removeItem: (item: CartItem) => void,
-  increaseAmount: (item: CartItem) => void,
-  decreaseAmount: (item: CartItem) => void,
-  increaseAmountInStock: (item: CartItem, amount: number) => void,
-  decreaseAmountInStock: (item: CartItem, amount: number) => void,
+  removeItem?: (item: CartItem) => void,
+  increaseAmount?: (item: CartItem) => void,
+  decreaseAmount?: (item: CartItem) => void,
+  increaseAmountInStock?: (item: CartItem, amount: number) => void,
+  decreaseAmountInStock?: (item: CartItem, amount: number) => void,
 };
 
 export const Checkout: React.FC<CheckoutProps> = props => {

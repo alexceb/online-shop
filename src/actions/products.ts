@@ -12,6 +12,14 @@ interface ReceivedDataAction {
   };
 }
 
+interface ReceivedDataWithErrorAction {
+  type: typeof ActionNames.RECEIVED_DATA_ERROR
+  payload: {
+    error: Error
+    isLoading: boolean
+  }
+}
+
 interface ChangeAmountAction {
   type: typeof ActionNames.INCREASE_AMOUNT_IN_STOCK | ActionNames.DECREASE_AMOUNT_IN_STOCK
   payload: {
@@ -20,21 +28,31 @@ interface ChangeAmountAction {
   }
 }
 
-export type ProductActions = ReceivedDataAction | ChangeAmountAction;
+export type ProductActions = ReceivedDataAction | ChangeAmountAction | ReceivedDataWithErrorAction;
 
 export const onGetData = () => {
-  return async (dispatch: Dispatch<ProductActions>) => {
-    const result = await api.getProducts();
-
-    return dispatch({
-      type: ActionNames.RECEIVED_DATA,
-      payload: {
-        data: result,
-        isLoading: false,
-      },
-    })
+  return (dispatch: Dispatch<ProductActions>) => {
+    return api.getProducts()
+      .then(res => dispatch(onGetDataSuccess(res)))
+      .catch(error => dispatch(onGetDataError(error)));
   }
 }
+
+export const onGetDataSuccess = (data: Product[]): ReceivedDataAction => ({
+  type: ActionNames.RECEIVED_DATA,
+  payload: {
+    data: data,
+    isLoading: false,
+  },
+});
+
+export const onGetDataError = (error: Error): ReceivedDataWithErrorAction => ({
+  type: ActionNames.RECEIVED_DATA_ERROR,
+  payload: {
+    error,
+    isLoading: false,
+  },
+});
 
 export const increaseAmountInStock = (item: CartItem, amount: number): ChangeAmountAction => ({
   type: ActionNames.INCREASE_AMOUNT_IN_STOCK,

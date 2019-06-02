@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Navigation component render() Renders <Nav /> correctly 1`] = `
+<nav
+  className="nav"
+>
+  <ul
+    className="navList"
+  >
+    <li
+      className="navListItem"
+    >
+      <NavLink
+        activeClassName="active"
+        exact={true}
+        to="/"
+      >
+        Browse products
+      </NavLink>
+    </li>
+    <li
+      className="navListItem"
+    >
+      <NavLink
+        activeClassName="active"
+        to="/checkout"
+      >
+        Cart
+      </NavLink>
+    </li>
+  </ul>
+</nav>
+`;

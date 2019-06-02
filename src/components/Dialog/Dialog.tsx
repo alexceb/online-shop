@@ -1,20 +1,14 @@
 import * as React from 'react';
 import * as styles from './Dialog.scss';
 
-interface DialogProps {
+export interface DialogProps {
   visible: boolean
-  onCancel: (value: boolean) => void
   onGoShopping: () => void
   onGoCart: () => void
 }
 
 export const Dialog: React.FC<DialogProps> = props => {
-  const { visible, onCancel, onGoShopping, onGoCart } = props;
-  
-  const onCloseDialog = (e: any) => {
-    e.preventDefault();
-    onCancel(false);
-  }
+  const { visible, onGoShopping, onGoCart } = props;
 
   return (
     <>

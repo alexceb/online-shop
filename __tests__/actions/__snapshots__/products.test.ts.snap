@@ -1,0 +1,91 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Products page action creators It dispatches DECREASE_AMOUNT_IN_STOCK when increasing cart item from checkout 1`] = `
+Array [
+  Object {
+    "payload": Object {
+      "amount": 1,
+      "item": Object {
+        "color": "white",
+        "product": Object {
+          "available": true,
+          "brand": "Philips",
+          "id": 1,
+          "name": "Philips hue bulb",
+          "options": Array [
+            Object {
+              "color": "white",
+              "power": Array [
+                6.5,
+                9.5,
+              ],
+              "quantity": 3,
+            },
+            Object {
+              "color": "red",
+              "power": Array [
+                6.5,
+                9.5,
+              ],
+              "quantity": 7,
+            },
+          ],
+          "price": "500",
+          "weight": 0.2,
+        },
+        "quantity": 3,
+        "subOption": Object {
+          "optionType": "power",
+          "optionValue": "7",
+        },
+      },
+    },
+    "type": "DECREASE_AMOUNT_IN_STOCK",
+  },
+]
+`;
+
+exports[`Products page action creators It dispatches INCREASE_AMOUNT_IN_STOCK when decreasing cart item from checkout 1`] = `
+Array [
+  Object {
+    "payload": Object {
+      "amount": 2,
+      "item": Object {
+        "color": "white",
+        "product": Object {
+          "available": true,
+          "brand": "Philips",
+          "id": 1,
+          "name": "Philips hue bulb",
+          "options": Array [
+            Object {
+              "color": "white",
+              "power": Array [
+                6.5,
+                9.5,
+              ],
+              "quantity": 3,
+            },
+            Object {
+              "color": "red",
+              "power": Array [
+                6.5,
+                9.5,
+              ],
+              "quantity": 7,
+            },
+          ],
+          "price": "500",
+          "weight": 0.2,
+        },
+        "quantity": 3,
+        "subOption": Object {
+          "optionType": "power",
+          "optionValue": "7",
+        },
+      },
+    },
+    "type": "INCREASE_AMOUNT_IN_STOCK",
+  },
+]
+`;

@@ -2,7 +2,7 @@ import { Product, CartItem } from '../typings/model';
 import { CartActions } from '../actions/cart';
 import { ActionNames } from '../actions/constants';
 
-interface CartState {
+export interface CartState {
   cart: CartItem[],
   total: number,
 }
