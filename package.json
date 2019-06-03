@@ -7,7 +7,7 @@
     "start": "parcel public/index.html -p 3000",
     "build": "parcel build public/index.html",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watchAll"
   },
   "keywords": [],
   "author": "",

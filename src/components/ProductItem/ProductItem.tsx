@@ -16,7 +16,8 @@ export const ProductItem: React.FC<ProductItemProps> = props => {
       {product.available ? (
         <NavLink to={`details/${product.id}`} className={styles.productItem}>
           <div className={styles.productItemWrapper}>
-            <div>{product.name}</div>
+            <div className={styles.productItemLabel}>{`(${product.brand}) ${product.name}`}</div>
+            <div className={styles.productPrice}>{`${product.price}$ `}</div>
           </div>
         </NavLink>
       ) : null}

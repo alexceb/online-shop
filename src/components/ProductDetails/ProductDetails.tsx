@@ -119,32 +119,41 @@ export const ProductDetails: React.FC<ProductDetailsProps> = props => {
               onGoCart={goToCart} />
       {product && !isLoading ? (
         <>
-          <h3>{product.name}</h3>
-          <p>Brand: {product.brand}</p>
-          <p>Price: ${product.price}</p>
-          <p>Weight: {product.weight}</p>
-          <p>Availability: {product.available ? 
-            (<span>IN STOCK</span>) 
-            : 
-            (<span>OUT OF STOCK</span>)}
-          </p>
-          {product.available ? (
-            <>
-              <OptionSelector options={product.options} 
-                          label="Colors"
-                          inputName="selectColor"
-                          onSelect={setSubOptions}
-                          compareWith={color} />
-              <OptionSelector options={productOptions} 
-                              label={optionLabel}
-                              inputName="selectSubOption"
-                              onSelect={onSelectSubOption}
-                              compareWith={option.optionValue} />
-              <div className={styles.buttonContainer}>
-                <button onClick={() => addToCart()} className={styles.button}>Add to cart</button>
+          <h3>{`(${product.brand}) ${product.name}`}</h3>
+          <div className={styles.productDetailsContainer}>
+            <div className={styles.productInfo}>
+              <p className={styles.infoLine}>
+                <span className={styles.textLabel}>Price: $</span>{product.price}
+              </p>
+              <p className={styles.infoLine}>
+                <span className={styles.textLabel}>Weight: </span>{product.weight}
+              </p>
+              <p className={styles.infoLine}>
+                <span className={styles.textLabel}>Availability: </span>
+                {product.available ? 
+                (<span>IN STOCK</span>) 
+                : 
+                (<span>OUT OF STOCK</span>)}
+              </p>
+            </div>
+            {product.available ? (
+              <div className={styles.configuration}>
+                <OptionSelector options={product.options} 
+                            label="Colors"
+                            inputName="selectColor"
+                            onSelect={setSubOptions}
+                            compareWith={color} />
+                <OptionSelector options={productOptions} 
+                                label={optionLabel}
+                                inputName="selectSubOption"
+                                onSelect={onSelectSubOption}
+                                compareWith={option.optionValue} />
+                <div className={styles.buttonContainer}>
+                  <button onClick={() => addToCart()} className={styles.button}>Add to cart</button>
+                </div>
               </div>
-            </>
-          ) : null}
+            ) : null}
+          </div>
         </>
       ) : (
         <Loader />

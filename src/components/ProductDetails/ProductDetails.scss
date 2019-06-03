@@ -5,6 +5,24 @@
   flex-direction: column;
 }
 
+.productDetailsContainer {
+  display: flex;
+  flex-direction: row;
+
+  .infoLine {
+    padding: 0.5rem 0;
+  }
+
+  .configuration {
+    width: 30%;
+  }
+
+  .productInfo {
+    width: 30%;
+  }
+}
+
+
 .colorLabel {
   display: inline-block;
   height: 2rem;
@@ -51,6 +69,8 @@ input[type=radio] {
 .buttonContainer {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  padding: 0.5rem 0;
 
   .button {
     display: inline-block;

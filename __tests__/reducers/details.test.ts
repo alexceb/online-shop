@@ -65,7 +65,28 @@ describe('Products page reducer', () => {
       isLoading: action.payload.isLoading,
       error: action.payload.error,
     })
-  })
+  });
+
+  it('Resets the selected product by setting to null when getting RESET_SELECTED_PRODUCT', () => {
+    const action: DetailsActions = {
+      type: ActionNames.RESET_SELECTED_PRODUCT,
+      payload: {
+        isLoading: true,
+      }
+    };
+
+    const stateWithProduct: DetailsState = {
+      selectedProduct: product,
+      isLoading: false,
+      error: null,
+    }
+
+    expect(detailsReducer(stateWithProduct, action)).toStrictEqual({
+      ...stateWithProduct,
+      selectedProduct: null,
+      isLoading: action.payload.isLoading,
+    })
+  });
 
   describe('Sets selected product after getting GET_PRODUCT_BY_ID_SUCCESS', () => {
     it('Gets data from response if there is no preloaded products', () => {
